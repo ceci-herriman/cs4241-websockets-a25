@@ -27,8 +27,11 @@ function App() {
                 const y = data.y
 
 
-                ctx.fillStyle = data.color
-                ctx.fillRect(x, y, 50, 50)
+                ctx.strokeStyle = data.color
+                ctx.lineWidth = 2
+                ctx.lineCap = 'round'
+                ctx.lineTo(x, y)
+                ctx.stroke();
             }
         }
 
@@ -45,7 +48,13 @@ function App() {
             }
             return color;
         }
-
+        
+        window.onmousedown = e => {
+          ctx.beginPath()
+        }
+        window.onmouseup = e => {
+         ctx.closePath()
+        }
 
         window.onmousemove = e => {
             if (e.buttons===1){
@@ -55,8 +64,12 @@ function App() {
                     color: "rgba(" + options.Color.r + "," + options.Color.g + "," + options.Color.b + "," + "1)"
                 }
                 ws.send(JSON.stringify(data))
-                ctx.fillStyle = "rgba(" + options.Color.r + "," + options.Color.g + "," + options.Color.b + "," + "1)"
-                ctx.fillRect(e.pageX, e.pageY, 50, 50)
+                ctx.strokeStyle = "rgba(" + options.Color.r + "," + options.Color.g + "," + options.Color.b + "," + "1)"
+            //ctx.fillRect(e.pageX, e.pageY, 50, 50)
+            ctx.lineWidth = 2
+            ctx.lineCap = 'round'
+            ctx.lineTo(e.pageX, e.pageY)
+            ctx.stroke();
             }
 
         }
